@@ -11,13 +11,13 @@
       <router-link to="/sales-report" class="nav-link">
         <div class="icon-container">
           <i class="material-icons">bar_chart</i>
-          <span>Sales Report</span>
+          <span>Products Report</span>
         </div>
       </router-link>
       <router-link to="/sales" class="nav-link">
         <div class="icon-container">
           <i class="material-icons">attach_money</i>
-          <span>Sales</span>
+          <span>Sales Report</span>
         </div>
       </router-link>
     </div>
