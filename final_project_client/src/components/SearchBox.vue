@@ -69,8 +69,33 @@ const downloadPDF = () => {
 
 
 const exportCSV = () => {
-  // Aquí iría la lógica para exportar como CSV
+  
+  const table = document.querySelector(".custom-table");
+  
+  // Obtiene las filas de la tabla
+  const rows = table.querySelectorAll("tr");
+  
+  // Inicializa una variable para almacenar el contenido del archivo CSV
+  let csvContent = "data:text/csv;charset=utf-8,";
+
+  // Itera sobre las filas de la tabla y agrega sus datos al contenido del CSV
+  rows.forEach((row) => {
+    const rowData = [];
+    row.querySelectorAll("td").forEach((cell) => {
+      rowData.push(cell.innerText);
+    });
+    csvContent += rowData.join(",") + "\n";
+  });
+
+  // Crea un enlace temporal y lo simula haciendo clic para descargar el archivo CSV
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "table.csv");
+  document.body.appendChild(link);
+  link.click();
 };
+
 </script>
 
 <style scoped>
