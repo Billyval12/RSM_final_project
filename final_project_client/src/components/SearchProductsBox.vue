@@ -1,0 +1,126 @@
+<template>
+  <div class="card">
+    <div class="card-body">
+      <div class="search-container">
+        <div class="search-group">
+          <label for="nameSearch" class="search-label">Search by Name:</label>
+          <input
+            v-model="state.searchText"
+            @change="() => $emit('searchByName', state.searchText, state.selectedType)"
+            placeholder="Enter name"
+            class="search-input"
+            id="nameSearch"
+          />
+        </div>
+        <div class="search-group">
+          <label for="categorySearch" class="search-label">Search by Category:</label>
+          <input
+            v-model="state.searchCategory"
+            @change="() => $emit('searchByType', state.searchCategory, state.selectedType)"
+            placeholder="Enter category"
+            class="search-input"
+            id="categorySearch"
+          />
+        </div>
+        <button @click="downloadPDF" class="pdf-button">
+          <i class="material-icons pdf-icon">cloud_download</i> Download PDF
+        </button>
+        <button @click="exportCSV" class="csv-button">
+          <i class="material-icons csv-icon">description</i> Export as CSV
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { reactive } from "vue";
+import html2pdf from "html2pdf.js";
+
+const state = reactive({
+  searchText: "",
+  searchCategory: "",
+  selectedType: "",
+});
+
+const downloadPDF = () => {
+  const table = document.querySelector(".custom-table");
+  const options = {
+    margin: 1,
+    filename: "table.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+  };
+
+  html2pdf().from(table).set(options).save();
+};
+
+const exportCSV = () => {
+  // Aquí iría la lógica para exportar como CSV
+};
+</script>
+
+<style scoped>
+.card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-group {
+  margin-right: 20px;
+}
+
+.search-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.search-input {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 200px;
+}
+
+.pdf-button,
+.csv-button {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: #2c3e50; /* Color del top-bar */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* Espacio entre los botones */
+}
+
+.pdf-button:hover,
+.csv-button:hover {
+  background-color: #34495e; /* Cambio de color al pasar el mouse */
+}
+
+.pdf-icon,
+.csv-icon {
+  font-size: 18px; /* Tamaño del icono */
+  margin-right: 5px;
+}
+</style>
