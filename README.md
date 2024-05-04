@@ -1,6 +1,6 @@
 # Adventure Works API
 
-Este proyecto proporciona una API basada en las vistas creadas sobre la base de datos de Adventure Works. Las vistas ofrecen una visión analítica de las ventas, permitiendo el análisis de ventas por región y categoría de productos.
+Este proyecto proporciona una API basada en las vistas creadas sobre la base de datos de Adventure Works. Las vistas ofrecen una visión analítica de las ventas, permitiendo el análisis de ventas por productos.
 
 Para utilizar esta API, primero es necesario crear la vista en la base de datos. A continuación se muestra el script SQL para crear la vista `SaleAnalysisView`:
 
