@@ -63,41 +63,43 @@ FROM
         TotalSalesCTE tsCTE ON tsCTE.TerritoryID = st.TerritoryID AND tsCTE.CategoryName = pc.Name
 ) s;
 ````
-Adicionalmente hay que agregar la vista `SalesReportView`:
+Adicionalmente hay que agregar la vista `NewSalesView`:
 
 ```sql
-CREATE VIEW SalesReportView AS
-SELECT 
-    Sales.SalesOrderDetail.SalesOrderID AS OrderID,
-    Sales.SalesOrderHeader.OrderDate,
-    Sales.SalesOrderHeader.CustomerID,
-    Sales.SalesOrderDetail.ProductID,
-    Production.Product.Name AS ProductName,
-    Production.ProductCategory.Name AS ProductCategory,
-    Sales.SalesOrderDetail.UnitPrice,
-    Sales.ShoppingCartItem.Quantity,
-    Sales.SalesOrderDetail.LineTotal AS TotalPrice,
-    Sales.SalesOrderHeader.SalesPersonID,
-    Person.Person.FirstName AS SalesPersonName,
-    Person.Address.AddressLine1 AS ShippingAddress,
-    Person.Address.City AS BillingAddress
+
+CREATE VIEW NewSalesView AS
+SELECT TOP 100
+    CAST(ROW_NUMBER() OVER (ORDER BY soh.SalesOrderID ASC) AS INT) AS Id,
+    soh.SalesOrderID 'OrderID',
+    CAST(soh.OrderDate AS date) 'OrderDate',
+    sod.ProductID,
+    p.Name 'ProductName',
+    pc.Name 'ProductCategory',
+    sod.UnitPrice,
+    sod.OrderQty,
+    sod.LineTotal,
+    soh.SalesPersonID,
+    CONCAT(Per.FirstName, ' ', Per.LastName) 'SalesPersonName',
+    CONCAT(sa.AddressLine1, ', ', sa.City) 'ShippingAddress',
+    CONCAT(ba.AddressLine1, ', ', ba.City) 'BillingAddress'
 FROM 
-    Sales.SalesOrderHeader
+    Sales.SalesOrderHeader soh
 INNER JOIN
-    Sales.SalesOrderDetail ON Sales.SalesOrderHeader.SalesOrderID = Sales.SalesOrderDetail.SalesOrderID
+    Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID 
 INNER JOIN
-    Sales.SalesPerson ON Sales.SalesOrderHeader.SalesPersonID = Sales.SalesPerson.BusinessEntityID
+    Production.Product p ON sod.ProductID = p.ProductID 
 INNER JOIN
-    Production.Product ON Sales.SalesOrderDetail.ProductID = Production.Product.ProductID
+    Production.ProductSubcategory psc ON p.ProductSubCategoryID = psc.ProductSubcategoryID
 INNER JOIN
-    Sales.ShoppingCartItem ON Production.Product.ProductID = Sales.ShoppingCartItem.ProductID
+    Production.ProductCategory pc ON psc.ProductCategoryID = pc.ProductCategoryID
 INNER JOIN
-    Person.Person ON Sales.SalesPerson.BusinessEntityID = Person.Person.BusinessEntityID
+    Person.Person per ON sp.BusinessEntityID = per.BusinessEntityID
 INNER JOIN
-    Person.Address ON Sales.SalesOrderHeader.BillToAddressID = Person.Address.AddressID 
-                    AND Sales.SalesOrderHeader.ShipToAddressID = Person.Address.AddressID
-CROSS JOIN
-    Production.ProductCategory;
+    Person.Address ba ON soh.BillToAddressID = ba.AddressID
+INNER JOIN 
+    Person.Address sa ON soh.ShipToAddressID = sa.AddressID;
+INNER JOIN
+    Sales.SalesPerson sp ON soh.SalesPersonID = sp.BusinessEntityID
 
 ````
 

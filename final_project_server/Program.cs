@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AppApi.Models;
 using CONTROLLER_BASED_API_with_ASP.NET_Core.Services;
+using AppApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +29,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<SalesAnalysisService>();
+builder.Services.AddScoped<NewSalesViewService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
