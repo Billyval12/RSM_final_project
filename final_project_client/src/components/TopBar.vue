@@ -8,7 +8,7 @@
           <span>Home</span>
         </div>
       </router-link>
-      <router-link to="/sales-report" class="nav-link">
+      <router-link to="/report" class="nav-link">
         <div class="icon-container">
           <i class="material-icons">bar_chart</i>
           <span>Products Report</span>

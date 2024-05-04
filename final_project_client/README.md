@@ -1,4 +1,3 @@
-# my-client-app
 
 ## Project setup
 ```

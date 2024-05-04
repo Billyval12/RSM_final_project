@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CONTROLLER-BASED API with ASP.NET Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed789bc8f4c0508cd17e8ceacb3a45f1441a227c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d68faeb44ee3d180aefdd00d524138ec2495382d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CONTROLLER-BASED API with ASP.NET Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CONTROLLER-BASED API with ASP.NET Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="search-container">
         <div class="search-group">
-          <label for="orderIDSearch" class="search-label">Product ID:</label>
+          <label for="orderIDSearch" class="search-label">Order ID:</label>
           <input
             v-model="state.searchOrderID"
             @change="() => $emit('searchByOrderID', state.searchOrderID)"
